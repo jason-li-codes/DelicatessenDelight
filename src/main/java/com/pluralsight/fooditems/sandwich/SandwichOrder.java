@@ -1,6 +1,6 @@
 package com.pluralsight.fooditems.sandwich;
 
-import com.pluralsight.FixedArrayList;
+import com.pluralsight.utilizedclasses.FixedArrayList;
 import com.pluralsight.fooditems.MenuItem;
 import com.pluralsight.fooditems.Size;
 

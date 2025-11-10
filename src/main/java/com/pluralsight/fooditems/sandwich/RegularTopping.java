@@ -1,6 +1,6 @@
 package com.pluralsight.fooditems.sandwich;
 
-public class RegularTopping implements Ingredient {
+public class RegularTopping extends SandwichFilling {
 
     private RegularToppingType regularToppingType;
     private boolean isExtra;

@@ -1,6 +1,6 @@
 package com.pluralsight.fooditems.sandwich;
 
-public class PremiumToppingMeat implements Ingredient {
+public class PremiumToppingMeat extends SandwichFilling {
 
     private MeatType meatType;
     private boolean isExtra;
