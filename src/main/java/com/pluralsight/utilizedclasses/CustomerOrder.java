@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.utilizedclasses;
 
 import com.pluralsight.fooditems.MenuItem;
 
@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public class CustomerOrder {
 
-    private FixedArrayList<MenuItem> orders;
+    private ArrayList<MenuItem> menuItems;
 
 }
