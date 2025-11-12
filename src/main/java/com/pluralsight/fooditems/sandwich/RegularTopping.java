@@ -3,31 +3,30 @@ package com.pluralsight.fooditems.sandwich;
 public class RegularTopping extends SandwichFilling {
 
     private RegularToppingType regularToppingType;
-    private boolean isExtra;
 
     // Constructor to set the calories value for each regular topping
     RegularTopping(RegularToppingType regularToppingType, boolean isExtra) {
         this.regularToppingType = regularToppingType;
         this.isExtra = isExtra;
-    }
-
-    // Getter method to retrieve the calories value
-    @Override
-    public int getCalories() {
-        return regularToppingType.getCalories();
-    }
-
-    @Override
-    public boolean isExtra() {
-        return isExtra;
-    }
-
-    // Setter to mark the topping as extra
-    public void setExtra(boolean isExtra) {
-        this.isExtra = isExtra;
+        updateCalories();
     }
 
     public void setRegularToppingType(RegularToppingType regularToppingType) {
         this.regularToppingType = regularToppingType;
+    }
+
+    public void updateCalories() {
+        this.calories = switch (regularToppingType) {
+            case LETTUCE -> 5;
+            case TOMATO -> 10;
+            case ONION -> 8;
+            case PEPPERS -> 7;
+            case JALAPENOS -> 6;
+            case PICKLES -> 9;
+            case OLIVES -> 15;
+            case SPINACH -> 11;
+            case MUSHROOMS -> 12;
+        };
+
     }
 }

@@ -2,25 +2,24 @@ package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.Calories;
 
-public enum Sauce implements Calories {
+public class Sauce extends Calories {
 
-    MAYO(50),        // Mayo has 50 calories
-    MUSTARD(10),     // Mustard has 10 calories
-    GUACAMOLE(150),  // Guacamole has 150 calories
-    PESTO(200),      // Pesto has 200 calories
-    RANCH(120),      // Ranch has 120 calories
-    CAESAR(130);     // Caesar dressing has 130 calories
+    private final SauceType sauceType;
 
-    private final int calories;
-
-    // Constructor to set the calories value for each sauce type
-    Sauce(int calories) {
-        this.calories = calories;
+    public Sauce(SauceType sauceType) {
+        this.sauceType = sauceType;
+        updateCalories();
     }
 
-    // Getter method to retrieve the calories value
-    @Override
-    public int getCalories() {
-        return calories;
+    public void updateCalories() {
+        this.calories = switch (sauceType) {
+            case MAYO -> 50;
+            case MUSTARD -> 10;
+            case GUACAMOLE -> 150;
+            case PESTO -> 200;
+            case RANCH -> 120;
+            case CAESAR -> 130;
+        };
     }
+
 }

@@ -2,19 +2,19 @@ package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.Calories;
 
-public enum Side implements Calories {
+public class Side extends Calories {
 
-    FRIES(375),     // Fries have 375 calories
-    PICKLES(10);    // Pickles have 10 calories
+    private final SideType sideType;
 
-    private final int calories;
-
-    Side(int calories) {
-        this.calories = calories;
+    public Side(SideType sideType) {
+        this.sideType = sideType;
+        updateCalories();
     }
 
-    @Override
-    public int getCalories() {
-        return calories;
+    private void updateCalories() {
+        this.calories = switch (sideType) {
+            case FRIES -> 375;
+            case PICKLES -> 20;
+        };
     }
 }

@@ -4,25 +4,32 @@ import com.pluralsight.utilizedclasses.FixedArrayList;
 import com.pluralsight.fooditems.MenuItem;
 import com.pluralsight.fooditems.Size;
 
-public class SandwichOrder implements MenuItem {
+public class SandwichOrder extends MenuItem {
 
     private Bread bread;
+    private Size size;
     private final FixedArrayList<PremiumToppingMeat> premiumToppingMeats;
     private final FixedArrayList<PremiumToppingCheese> premiumToppingCheeses;
     private final FixedArrayList<RegularTopping> regularToppings;
     private final FixedArrayList<Sauce> sauces;
-    private Size size;
-    private boolean isToasted;
     private final FixedArrayList<Side> sides;
+    private boolean isToasted;
 
-    public SandwichOrder(Bread bread) {
+    public SandwichOrder(Bread bread, Size size) {
         this.bread = bread;
+        this.size = size;
         this.premiumToppingMeats = new FixedArrayList<>(2);
         this.premiumToppingCheeses = new FixedArrayList<>(2);
         this.regularToppings = new FixedArrayList<>(5);
         this.sauces = new FixedArrayList<>(3);
-        this.isToasted = false;
         this.sides = new FixedArrayList<>(2);
+        this.isToasted = false;
+        this.calories = bread.getCalories();
+        this.price = switch (size) {
+            case SMALL -> 5.50;
+            case MEDIUM -> 7;
+            case LARGE -> 8.50;
+        };
     }
 
     public Bread getBread() {
@@ -59,6 +66,7 @@ public class SandwichOrder implements MenuItem {
 
     public void setBread(Bread bread) {
         this.bread = bread;
+        updateCalories();
     }
 
     public void setToasted(boolean toasted) {
@@ -67,11 +75,15 @@ public class SandwichOrder implements MenuItem {
 
     public void setSize(Size size) {
         this.size = size;
+        updateCalories();
+        updatePrice();
     }
 
     public void addMeat(PremiumToppingMeat premiumToppingMeat) {
         try {
             this.premiumToppingMeats.add(premiumToppingMeat);
+            updateCalories();
+            updatePrice();
         } catch (IllegalArgumentException e) {
             System.out.println(premiumToppingMeat + " not added, you may only have up to 2 meats in your sandwich.");
         }
@@ -80,6 +92,8 @@ public class SandwichOrder implements MenuItem {
     public void addCheese(PremiumToppingCheese premiumToppingCheese) {
         try {
             this.premiumToppingCheeses.add(premiumToppingCheese);
+            updateCalories();
+            updatePrice();
         } catch (IllegalArgumentException e) {
             System.out.println(premiumToppingCheese + " not added, you may only have up to 2 cheeses in your sandwich.");
         }
@@ -88,6 +102,7 @@ public class SandwichOrder implements MenuItem {
     public void addRegularTopping(RegularTopping regularTopping) {
         try {
             this.regularToppings.add(regularTopping);
+            updateCalories();
         } catch (IllegalArgumentException e) {
             System.out.println(regularTopping + " not added, you may only have up to 5 toppings in your sandwich.");
         }
@@ -96,6 +111,7 @@ public class SandwichOrder implements MenuItem {
     public void addSauce(Sauce sauce) {
         try {
             this.sauces.add(sauce);
+            updateCalories();
         } catch (IllegalArgumentException e) {
             System.out.println(sauce + " not added, you may only have up to 3 sauces in your sandwich.");
         }
@@ -104,6 +120,7 @@ public class SandwichOrder implements MenuItem {
     public void addSide(Side side) {
         try {
             this.sides.add(side);
+            updateCalories();
         } catch (IllegalArgumentException e) {
             System.out.println(side + " not added, you may only have up to 2 sides with your sandwich.");
         }
@@ -113,6 +130,8 @@ public class SandwichOrder implements MenuItem {
         try {
             PremiumToppingMeat thisMeat = this.premiumToppingMeats.getItems().remove(index);
             System.out.println(thisMeat + " removed.");
+            updateCalories();
+            updatePrice();
         } catch (Exception e) {
             System.out.println("Error removing meat: " + e.getMessage());
         }
@@ -122,6 +141,8 @@ public class SandwichOrder implements MenuItem {
         try {
             PremiumToppingCheese thisCheese = this.premiumToppingCheeses.getItems().remove(index);
             System.out.println(thisCheese + " removed.");
+            updateCalories();
+            updatePrice();
         } catch (Exception e) {
             System.out.println("Error removing cheese: " + e.getMessage());
         }
@@ -131,6 +152,7 @@ public class SandwichOrder implements MenuItem {
         try {
             RegularTopping thisRegularTopping = this.regularToppings.getItems().remove(index);
             System.out.println(thisRegularTopping + " removed.");
+            updateCalories();
         } catch (Exception e) {
             System.out.println("Error removing topping: " + e.getMessage());
         }
@@ -140,6 +162,7 @@ public class SandwichOrder implements MenuItem {
         try {
             Sauce thisSauce = this.sauces.getItems().remove(index);
             System.out.println(thisSauce + " removed.");
+            updateCalories();
         } catch (Exception e) {
             System.out.println("Error removing sauce: " + e.getMessage());
         }
@@ -149,6 +172,7 @@ public class SandwichOrder implements MenuItem {
         try {
             Side thisSide = this.sides.getItems().remove(index);
             System.out.println(thisSide + " removed.");
+            updateCalories();
         } catch (Exception e) {
             System.out.println("Error removing side: " + e.getMessage());
         }
@@ -156,34 +180,39 @@ public class SandwichOrder implements MenuItem {
 
     public void updateMeatType(int index, MeatType meatType) {
         this.premiumToppingMeats.getItems().get(index).setMeatType(meatType);
+        updateCalories();
     }
 
     public void updateCheeseType(int index, CheeseType cheeseType) {
         this.premiumToppingCheeses.getItems().get(index).setCheeseType(cheeseType);
+        updateCalories();
     }
 
     public void updateRegularToppingType(int index, RegularToppingType RegularToppingType) {
         this.regularToppings.getItems().get(index).setRegularToppingType(RegularToppingType);
+        updateCalories();
     }
 
     public void updateMeatExtra(int index, boolean isExtra) {
         this.premiumToppingMeats.getItems().get(index).setExtra(isExtra);
+        updateCalories();
+        updatePrice();
     }
 
     public void updateCheeseExtra(int index, boolean isExtra) {
         this.premiumToppingCheeses.getItems().get(index).setExtra(isExtra);
+        updateCalories();
+        updatePrice();
     }
 
     public void updateRegularToppingExtra(int index, boolean isExtra) {
         this.regularToppings.getItems().get(index).setExtra(isExtra);
+        updateCalories();
     }
 
-    @Override
-    public double getPrice() {
+    public void updatePrice() {
 
-        double totalPrice = 0;
-
-        totalPrice += switch (size) {
+        double totalPrice = switch (size) {
             case SMALL -> 5.50;
             case MEDIUM -> 7;
             case LARGE -> 8.50;
@@ -229,11 +258,10 @@ public class SandwichOrder implements MenuItem {
                         })
                         .sum();  // Sum all the extra cheese prices
 
-        return totalPrice;
+        price = totalPrice;
     }
 
-    @Override
-    public int getCalories() {
+    public void updateCalories() {
 
         int totalCal = 0;
         totalCal += bread.getCalories();
@@ -253,10 +281,7 @@ public class SandwichOrder implements MenuItem {
                 .mapToInt(Side::getCalories) // Extract calories from each side
                 .sum();
 
-        return switch (size) {
-            case SMALL -> totalCal;
-            case MEDIUM -> totalCal * 2;
-            case LARGE -> totalCal * 3;
-        };
+        this.calories = totalCal;
     }
+
 }

@@ -2,23 +2,17 @@ package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.Calories;
 
-public enum Bread implements Calories {
+public class Bread extends Calories {
 
-    WHITE(100),      // White bread has 70 calories
-    MULTIGRAIN(90),  // Multigrain bread has 90 calories
-    WHEAT(80),       // Wheat bread has 80 calories
-    RYE(85);         // Rye bread has 85 calories
+    private BreadType breadType;
 
-    private final int calories;
-
-    // Constructor to set the calories value for each bread type
-    Bread(int calories) {
-        this.calories = calories;
+    public Bread(BreadType breadType) {
+        this.calories = switch (breadType) {
+            case WHITE -> 100;
+            case MULTIGRAIN -> 90;
+            case WHEAT -> 80;
+            case RYE -> 85;
+        };
     }
 
-    // Getter method to retrieve the calories value
-    @Override
-    public int getCalories() {
-        return calories;
-    }
 }

@@ -1,7 +1,11 @@
 package com.pluralsight.fooditems;
 
-public interface MenuItem extends Calories {
+public class MenuItem extends Calories {
 
-    public double getPrice();
+    protected double price;
+
+    public double getPrice() {
+        return price;
+    }
 
 }

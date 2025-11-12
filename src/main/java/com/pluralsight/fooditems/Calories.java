@@ -1,7 +1,11 @@
 package com.pluralsight.fooditems;
 
-public interface Calories {
+public abstract class Calories {
 
-    public int getCalories();
+    protected int calories;
+
+    public int getCalories() {
+        return calories;
+    }
 
 }
