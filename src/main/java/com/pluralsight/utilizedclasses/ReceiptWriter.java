@@ -1,14 +1,12 @@
 package com.pluralsight.utilizedclasses;
 
 import com.pluralsight.fooditems.*;
-import com.pluralsight.fooditems.MenuItem;
-import com.pluralsight.fooditems.addons.Chips;
-import com.pluralsight.fooditems.addons.Drink;
+import com.pluralsight.fooditems.addons.*;
 import com.pluralsight.fooditems.sandwich.*;
 
+import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,18 +20,18 @@ public class ReceiptWriter {
 
         try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter(newFileName))) {
             bufWriter.write(newFileName.substring(0, newFileName.length() - 4) + "\n\n");
+            bufWriter.write("--------------------------------------------------------\n");
             for (MenuItem menuItem : customerOrder.getMenuItems()) { // Writes each transaction to file
                 bufWriter.write(formatReceipt(menuItem));
-                bufWriter.write("-----------------------------------------------");
             }
+            bufWriter.write("--------------------------------------------------------\n");
+            bufWriter.write("Thank you for coming to Delicatessen Delights, please come again!");
             System.out.println("File created successfully.");
         } catch (FileNotFoundException e) { // Handles FileNotFoundException
-            System.out.println("Sorry, there's a problem creating the file, please try again later.");
+            System.out.println("Sorry, there's a problem creating the receipt, please try again later.");
         } catch (IOException e) { // Handles other IOExceptions
-            System.out.println("Sorry, there's a problem writing the file, please try again later.");
+            System.out.println("Sorry, there's a problem writing the receipt, please try again later.");
         }
-
-
     }
 
     public static String formatReceipt(MenuItem menuItem) {
@@ -57,6 +55,8 @@ public class ReceiptWriter {
                     receiptLine.append(" - ").append(meat.getMeatType()).append(" (")
                             .append(meat.isExtra() ? "Extra" : "Regular").append(")\n");
                 }
+            } else {
+                receiptLine.append("No meats selected.\n");
             }
             // Add Cheeses
             if (!s.getPremiumToppingCheeses().getItems().isEmpty()) {
@@ -65,6 +65,8 @@ public class ReceiptWriter {
                     receiptLine.append(" - ").append(cheese.getCheeseType()).append(" (")
                             .append(cheese.isExtra() ? "Extra" : "Regular").append(")\n");
                 }
+            } else {
+                receiptLine.append("No cheeses selected.\n");
             }
             // Add Regular Toppings
             if (!s.getRegularToppings().getItems().isEmpty()) {
@@ -72,6 +74,8 @@ public class ReceiptWriter {
                 for (RegularTopping topping : s.getRegularToppings().getItems()) {
                     receiptLine.append(" - ").append(topping.getRegularToppingType()).append("\n");
                 }
+            } else {
+                receiptLine.append("No toppings selected.\n");
             }
             // Add Sauces
             if (!s.getSauces().getItems().isEmpty()) {
@@ -79,6 +83,8 @@ public class ReceiptWriter {
                 for (Sauce sauce : s.getSauces().getItems()) {
                     receiptLine.append(" - ").append(sauce.getSauceType()).append("\n");
                 }
+            } else {
+                receiptLine.append("No sauces selected.\n");
             }
             // Add Sides
             if (!s.getSides().getItems().isEmpty()) {
@@ -86,6 +92,8 @@ public class ReceiptWriter {
                 for (Side side : s.getSides().getItems()) {
                     receiptLine.append("  - ").append(side.getSideType()).append("\n");
                 }
+            } else {
+                receiptLine.append("No sides selected.\n");
             }
             // Add Price and Calories
             receiptLine.append("=====================================\n")
@@ -98,42 +106,36 @@ public class ReceiptWriter {
 
         } else if (menuItem instanceof Drink d) {
 
-            StringBuilder receiptLine = new StringBuilder();
             // Add Header
-            receiptLine.append("=====================================\n")
-                    .append("                DRINK                \n")
-                    .append("=====================================\n");
-            // Add Order Information
-            receiptLine.append(String.format("Size: %s\n", d.getSize()));
-            receiptLine.append(String.format("Brand: %s\n", d.getDrinkType()));
-            // Add Price and Calories
-            receiptLine.append("=====================================\n")
-                    .append(String.format("Price: $%.2f\n", d.getPrice()))
-                    .append(String.format("Calories: %d\n", d.getCalories()));
-            // Add Footer
-            receiptLine.append("=====================================\n");
             // Return StringBuilder as String
-            return receiptLine.toString();
+            return "=====================================\n" +
+                    "                DRINK                \n" +
+                    "=====================================\n" +
+                    // Add Order Information
+                    String.format("Size: %s\n", d.getSize()) +
+                    String.format("Brand: %s\n", d.getDrinkType()) +
+                    // Add Price and Calories
+                    "=====================================\n" +
+                    String.format("Price: $%.2f\n", d.getPrice()) +
+                    String.format("Calories: %d\n", d.getCalories()) +
+                    // Add Footer
+                    "=====================================\n";
 
-        } else {
-            Chips c = (Chips) menuItem;
-
-            StringBuilder receiptLine = new StringBuilder();
+        } else if (menuItem instanceof Chips c) {
             // Add Header
-            receiptLine.append("=====================================\n")
-                    .append("                CHIPS                \n")
-                    .append("=====================================\n");
-            // Add Order Information
-            receiptLine.append(String.format("Brand: %s\n", c.getChipsType()));
-            // Add Price and Calories
-            receiptLine.append("=====================================\n")
-                    .append(String.format("Price: $%.2f\n", c.getPrice()))
-                    .append(String.format("Calories: %d\n", c.getCalories()));
-            // Add Footer
-            receiptLine.append("=====================================\n");
             // Return StringBuilder as String
-            return receiptLine.toString();
+            return "=====================================\n" +
+                    "                CHIPS                \n" +
+                    "=====================================\n" +
+                    // Add Order Information
+                    String.format("Brand: %s\n", c.getChipsType()) +
+                    // Add Price and Calories
+                    "=====================================\n" +
+                    String.format("Price: $%.2f\n", c.getPrice()) +
+                    String.format("Calories: %d\n", c.getCalories()) +
+                    // Add Footer
+                    "=====================================\n";
         }
+        return "";
     }
-
 }
