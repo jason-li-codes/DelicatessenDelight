@@ -1,8 +1,7 @@
 package com.pluralsight.utilizedclasses;
 
 import com.pluralsight.fooditems.Size;
-import com.pluralsight.fooditems.addons.Drink;
-import com.pluralsight.fooditems.addons.DrinkType;
+import com.pluralsight.fooditems.addons.*;
 import com.pluralsight.fooditems.sandwich.Bread;
 import com.pluralsight.fooditems.sandwich.SandwichOrder;
 import com.pluralsight.fooditems.sandwich.swtypes.BreadType;
@@ -232,7 +231,53 @@ public class UserInterface {
 
     }
 
-    private static void addChips() {}
+    private static void addChips() {
+
+        System.out.println("""
+                What type of chips would you like?
+                (1) Po-Tay-Tohz
+                (2) Free-Tohz
+                (3) Toasty-Tohz
+                (4) Taki-Tohz
+                (5) Dory-Tohz
+                (0) Cancel chips order
+                """);
+        // Loop to get valid input
+        ChipsType chipsType = null;
+        boolean isRunning = true;
+        while (isRunning) {
+            // Get valid user input (assuming `getValidInput` method or equivalent is present)
+            char chooseChipsMenuOption = getValidInput(String.class, false).charAt(0);
+            switch (chooseChipsMenuOption) {
+                case '1' -> {
+                    chipsType = ChipsType.PO_TAY_TOHZ;
+                    isRunning = false;  // Exit loop after valid selection
+                }
+                case '2' -> {
+                    chipsType = ChipsType.FREE_TOHZ;
+                    isRunning = false;
+                }
+                case '3' -> {
+                    chipsType = ChipsType.TOASTY_TOHZ;
+                    isRunning = false;
+                }
+                case '4' -> {
+                    chipsType = ChipsType.TAKI_TOHZ;
+                    isRunning = false;
+                }
+                case '5' -> {
+                    chipsType = ChipsType.DORY_TOHZ;
+                    isRunning = false;
+                }
+                case '0' -> {
+                    System.out.println("Returning to previous menu....");
+                    return;  // Exit the method, effectively going back
+                }
+                default -> System.out.println("Invalid menu option, please try again.");
+            }
+        }
+        customerOrder.getMenuItems().add(new Chips(chipsType));
+    }
 
     private static <T> T getValidInput(Class<T> type, boolean allowNull) {
 
