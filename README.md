@@ -12,7 +12,7 @@ The **Delicatessen Delights** project is a Command Line Interface (CLI) applicat
 4.  [Setup and Installation](#4-setup-and-installation-)
 5.  [User Interface / Menu Examples](#5-user-interface--menu-examples-%EF%B8%8F)
 6.  [Example Receipt Output](#6-example-receipt-output-)
-7.  [Interesting Code Snippet](#7-interesting-code-snippet-)
+7.  [Code Highlight](#7-code-highlight-)
 8.  [Future Improvements](#8-future-improvements-)
 
 -----
@@ -249,7 +249,7 @@ The checkout screen displays the current order list and totals before processing
 
 ```
 ╔════════════════════════════════════════════════════════════╦══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                                            ║ 1. green mountain melt                                                                                               ║
+║                                                            ║ 1. Green Mountain Melt                                                                                               ║
 ║                                                            ║ =====================================                                                                                ║
 ║                                                            ║ Size: MEDIUM                                                                                                         ║
 ║                                                            ║ Bread: MULTIGRAIN                                                                                                    ║
@@ -301,7 +301,7 @@ Size: MEDIUM
 Bread: RYE
 Toasted: Yes
 Meats:
- - ROAST_BEEF (Extra)
+ - ROAST BEEF (Extra)
  - BACON (Extra)
 Cheeses:
  - CHEDDAR (Extra)
@@ -335,15 +335,16 @@ Price: $1.50
 Calories: 150
 =====================================
 -------------------------------------
-Total Price: 14.50
+Total Price: $14.50
 Total Calories: 2650
 -------------------------------------
-Thank you for coming to Delicatessen Delights, please come again!
+Thank you for coming to
+Delicatessen Delights, please come again!
 ```
 
 -----
 
-### 7\. Interesting Code Snippet 💡
+### 7\. Code Highlight 💡
 
 This method showcases the **dynamic calorie calculation**, which ensures the total calorie count is always accurate regardless of the sandwich's components or size. It uses Java Streams to efficiently aggregate the calories of every component and applies a final multiplier based on the sandwich size (`SMALL`=x1, `MEDIUM`=x2, `LARGE`=x3).
 
@@ -357,13 +358,25 @@ public void updateCalories() {
     totalCal += bread.getCalories(); // Extract calories from bread
     totalCal += premiumToppingMeats.getItems().stream()
             .mapToInt(PremiumToppingMeat::getCalories) // Extract calories from each meat topping
-            .sum();
+            .sum() +
+            premiumToppingMeats.getItems().stream()
+                    .filter(PremiumToppingMeat::isExtra)  // Filter the items where isExtra is true
+                    .mapToInt(PremiumToppingMeat::getCalories) // Get calories only for those extra
+                    .sum();
     totalCal += premiumToppingCheeses.getItems().stream()
             .mapToInt(PremiumToppingCheese::getCalories) // Extract calories from each cheese topping
-            .sum();
+            .sum() +
+            premiumToppingCheeses.getItems().stream()
+                   .filter(PremiumToppingCheese::isExtra)  // Filter the items where isExtra is true
+                   .mapToInt(PremiumToppingCheese::getCalories) // Get calories only for those extra
+                   .sum();
     totalCal += regularToppings.getItems().stream()
             .mapToInt(RegularTopping::getCalories) // Extract calories from each regular topping
-            .sum();
+            .sum() +
+            regularToppings.getItems().stream()
+                   .filter(RegularTopping::isExtra)  // Filter the items where isExtra is true
+                   .mapToInt(RegularTopping::getCalories) // Get calories only for those extra
+                   .sum();
     totalCal += sauces.getItems().stream()
             .mapToInt(Sauce::getCalories) // Extract calories from each sauce
             .sum();
