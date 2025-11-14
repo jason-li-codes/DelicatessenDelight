@@ -15,7 +15,7 @@ public class OrderWriter {
     public static void writeReceipt(CustomerOrder customerOrder) {
 
         String formattedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        String newFileName = formattedDate + "_DELI_ORDER.txt";
+        String newFileName = "receipts/" + formattedDate + "_DELI_ORDER.txt";
 
         try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter(newFileName))) {
             bufWriter.write(newFileName.substring(0, newFileName.length() - 4) + "\n\n");
@@ -26,6 +26,9 @@ public class OrderWriter {
                 bufWriter.write(formatOrder(menuItem));
             }
             bufWriter.write("--------------------------------------------------------\n");
+            bufWriter.write("Total Price: " + customerOrder.getTotalPrice() + "\n");
+            bufWriter.write("Total Calories: " + customerOrder.getTotalCalories() + "\n");
+            bufWriter.write("--------------------------------------------------------\n");
             bufWriter.write("Thank you for coming to Delicatessen Delights, please come again!");
             System.out.println("File created successfully.");
         } catch (FileNotFoundException e) { // Handles FileNotFoundException
@@ -35,7 +38,7 @@ public class OrderWriter {
         }
     }
 
-    public String toString(CustomerOrder customerOrder) {
+    public static String toString(CustomerOrder customerOrder) {
 
         StringBuilder orderString = new StringBuilder();
 
@@ -46,6 +49,9 @@ public class OrderWriter {
                     .append(formatOrder(menuItem))
                     .append("\n");  // add newline after each item
         }
+        orderString.append("--------------------------------------------------------\n")
+                .append("Total Price: ").append(customerOrder.getTotalPrice()).append("\n")
+                .append("Total Calories: ").append(customerOrder.getTotalCalories()).append("\n");
         // Convert to String
         return orderString.toString();
     }
