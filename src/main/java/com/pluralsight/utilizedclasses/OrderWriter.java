@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ReceiptWriter {
+public class OrderWriter {
 
     public static void writeReceipt(CustomerOrder customerOrder) {
 
@@ -21,7 +21,7 @@ public class ReceiptWriter {
             bufWriter.write(newFileName.substring(0, newFileName.length() - 4) + "\n\n");
             bufWriter.write("--------------------------------------------------------\n");
             for (MenuItem menuItem : customerOrder.getMenuItems()) { // Writes each transaction to file
-                bufWriter.write(formatReceipt(menuItem));
+                bufWriter.write(formatOrder(menuItem));
             }
             bufWriter.write("--------------------------------------------------------\n");
             bufWriter.write("Thank you for coming to Delicatessen Delights, please come again!");
@@ -33,7 +33,7 @@ public class ReceiptWriter {
         }
     }
 
-    public static String formatReceipt(MenuItem menuItem) {
+    public static String formatOrder(MenuItem menuItem) {
 
         if (menuItem instanceof SandwichOrder s) {
             s.toString("SANDWICH");
