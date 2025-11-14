@@ -8,32 +8,36 @@ import java.util.Scanner;
 
 public class UserInterface {
 
+    // Define a CustomerOrder and Scanner as private static attributes
     private static CustomerOrder customerOrder;
     private static Scanner input;
 
+    // Initialize private attributes
     private void init() {
         customerOrder = new CustomerOrder();
         input = new Scanner(System.in);
     }
 
+    // Main display method
     public void display() {
-
+        // Call initializing method
         init();
-
+        // Show homepage
         while (true) {
+            // Print homepage
             PrintColumns.twoColumns("""
                     Welcome to Delicatessen Delights!
                     (1) Start new order
                     (0) Exit
                     """, PrintMenu.homepage());
-
+            // Get first character of user input
             char mainMenuOption = getValidInput(String.class).charAt(0);
             switch (mainMenuOption) {
-                case '1' -> orderMenu();
+                case '1' -> orderMenu(); // Call orderMenu method
                 case '0' -> {
                     System.out.println("EXITING....");
-                    input.close();
-                    return;
+                    input.close(); // Close Scanner
+                    return; // End program
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
             }
@@ -43,6 +47,7 @@ public class UserInterface {
     private static void orderMenu() {
 
         while (true) {
+            // Print order menu
             PrintColumns.twoColumns("""
                     What item would you like to add to your order?
                     (1) Add a sandwich
@@ -51,14 +56,15 @@ public class UserInterface {
                     (4) Checkout
                     (0) Return to main menu
                     """, PrintMenu.fullMenu());
+            // Get first character of user input
             char orderMenuOption = getValidInput(String.class).charAt(0);
             switch (orderMenuOption) {
-                case '1' -> addSandwich();
-                case '2' -> addDrink();
-                case '3' -> addChips();
-                case '4' -> checkoutMenu();
+                case '1' -> addSandwich(); // Call addSandwich method
+                case '2' -> addDrink(); // Call addDrink method
+                case '3' -> addChips(); // Call addChips method
+                case '4' -> checkoutMenu(); // Call checkoutMenu
                 case '0' -> {
-                    customerOrder.getMenuItems().clear();
+                    customerOrder.getMenuItems().clear(); // Clear customerOrder as program exits
                     System.out.println("Returning to main menu....");
                     return;
                 }
@@ -71,19 +77,21 @@ public class UserInterface {
     private static void checkoutMenu() {
 
         while (true) {
+            // Print checkout menu
             PrintColumns.twoColumns("""
                     Would you like to checkout?
                     (1) Yes, checkout
                     (2) No, I want to remove an item
                     (3) Return to previous menu
                     """, OrderWriter.toString(customerOrder));
+            // Get first character of user input
             char checkoutMenuOption = getValidInput(String.class).charAt(0);
             switch (checkoutMenuOption) {
                 case '1' -> {
-                    checkout();
+                    checkout(); // Call checkout method
                     return;
                 }
-                case '2' -> checkoutRemoveMenu();
+                case '2' -> checkoutRemoveMenu(); // Call checkoutRemoveMenu method
                 case '3' -> {
                     return;
                 }
@@ -95,15 +103,20 @@ public class UserInterface {
     private static void checkoutRemoveMenu() {
 
         while (true) {
+            // Print options
             PrintColumns.twoColumns("""
                     Which number item would you like to remove?
                     Or, press (0) to return to previous menu
                     """, OrderWriter.toString(customerOrder));
+            // Get integer from user
             int removeItemNum = getValidInput(Integer.class);
+            // If integer is invalid, reprompt
             if (removeItemNum < 0 || removeItemNum > customerOrder.getMenuItems().size()) {
                 System.out.println("Sorry, I don't see that number on the order.");
+                // If integer is 0, exit
             } else if (removeItemNum == 0) {
                 return;
+                // Otherwise, remove appropriate MenuItem by using index
             } else {
                 customerOrder.getMenuItems().remove(removeItemNum - 1);
                 System.out.println("Item successfully removed.");
@@ -112,30 +125,34 @@ public class UserInterface {
     }
 
     private static void checkout() {
-
+        // Call writeReceipt static method
         OrderWriter.writeReceipt(customerOrder);
+        // Print receipt and thank you message
         PrintColumns.twoColumns("""
                 Your receipt has been printed.
                 Thank you for coming to Delicatessen Delights, please come again!
                 """, OrderWriter.toString(customerOrder));
+        // Clear customerOrder
         customerOrder.getMenuItems().clear();
-        input.close();
-        System.exit(0);
+        input.close(); // Close scanner
+        System.exit(0); // Exit program
     }
 
     private static void addSandwich() {
 
         while (true) {
+            // Print options
             PrintColumns.twoColumns("""
                     What kind of sandwich would you like?
                     (S) Specials
                     (C) Custom
                     (X) Return to previous menu
                     """, PrintMenu.sandwichMenu());
+            // Get first character of user input
             char sandwichMenuOption = getValidInput(String.class).charAt(0);
             switch (sandwichMenuOption) {
-                case 's' -> specialsMenu();
-                case 'c' -> buildSandwich();
+                case 's' -> specialsMenu(); // Call specialMenu
+                case 'c' -> buildSandwich(); // Call buildSandwich
                 case 'x' -> {
                     System.out.println("Returning to previous menu....");
                     return;
@@ -149,6 +166,7 @@ public class UserInterface {
     private static void specialsMenu() {
 
         while (true) {
+            // Print options
             PrintColumns.twoColumns("""
                     Which special would you like?
                     (1) Green Mountain Melt
@@ -159,9 +177,11 @@ public class UserInterface {
                     (6) Mediterranean Delight
                     (0) Return to previous menu
                     """, PrintMenu.specialsMenu());
+            // Get first character of user input
             char specialsMenuOption = getValidInput(String.class).charAt(0);
             boolean isRunning = true;
             while (isRunning) {
+                // Create correct SpecialSandwichOrder based on user input
                 switch (specialsMenuOption) {
                     case '1' -> {
                         customerOrder.getMenuItems().add(new SpecialSandwichOrder("green mountain melt"));
@@ -196,16 +216,18 @@ public class UserInterface {
             }
             isRunning = true;
             while (isRunning) {
+                // Print options
                 PrintColumns.twoColumns("""
                         Would you like to add another special?
                         (Y) Yes
                         (N) No, return to previous menu
                         """, PrintMenu.specialsMenu());
+                // Get first character of user input
                 char addSpecialOption = getValidInput(String.class).charAt(0);
                 switch (addSpecialOption) {
-                    case 'y' -> isRunning = false;
+                    case 'y' -> isRunning = false; // End while loops
                     case 'n' -> {
-                        return;
+                        return; // Exit method
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
@@ -218,6 +240,7 @@ public class UserInterface {
         Size sandwichSize = null;
         boolean isRunning = true;
         while (isRunning) {
+            // Print options
             PrintColumns.twoColumns("""
                     What size of sandwich would you like?
                     (S) Small
@@ -225,7 +248,9 @@ public class UserInterface {
                     (L) Large
                     (X) Cancel sandwich order
                     """, PrintMenu.sandwichMenu());
+            // Get first character of user input
             char addSandwichMenuOption = getValidInput(String.class).charAt(0);
+            // Get appropriate Size
             switch (addSandwichMenuOption) {
                 case 's' -> {
                     sandwichSize = Size.SMALL;
@@ -246,18 +271,22 @@ public class UserInterface {
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
-        PrintColumns.twoColumns("""
-                What type of bread would you like?
-                (1) White
-                (2) Multigrain
-                (3) Wheat
-                (4) Rye
-                (0) Cancel sandwich order
-                """, PrintMenu.sandwichMenu());
+
         BreadType breadType = null;
         isRunning = true;
         while (isRunning) {
+            // Print options
+            PrintColumns.twoColumns("""
+                    What type of bread would you like?
+                    (1) White
+                    (2) Multigrain
+                    (3) Wheat
+                    (4) Rye
+                    (0) Cancel sandwich order
+                    """, PrintMenu.sandwichMenu());
+            // Get first character of user input
             char chooseBreadMenuOption = getValidInput(String.class).charAt(0);
+            // Assign correct BreadType
             switch (chooseBreadMenuOption) {
                 case '1' -> {
                     breadType = BreadType.WHITE;
@@ -282,15 +311,19 @@ public class UserInterface {
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
+        // Create basic SandwichOrder
         SandwichOrder currentSandwich = new SandwichOrder(new Bread(breadType), sandwichSize);
 
         isRunning = true;
         while (isRunning) {
+            // Print options
             PrintColumns.twoColumns("""
                     Would you like your sandwich toasted?
                     (Y) Yes
                     (N) No""", PrintMenu.sandwichMenu());
+            // Get first character of user input
             char chooseToastedOption = getValidInput(String.class).charAt(0);
+            // Set correct isToasted boolean value
             switch (chooseToastedOption) {
                 case 'y' -> {
                     currentSandwich.setToasted(true);
@@ -304,6 +337,7 @@ public class UserInterface {
             }
         }
 
+        // Call methods to add SandwichFillings
         addSandwichMeat(currentSandwich);
         addSandwichCheese(currentSandwich);
         addSandwichToppings(currentSandwich);
@@ -316,20 +350,23 @@ public class UserInterface {
     private static void addSandwichMeat(SandwichOrder currentSandwich) {
 
         while (true) {
-            boolean isRunning = true;
             MeatType meatType = null;
-            PrintColumns.threeColumns("""
-                    What meat would you like to add to your sandwich?
-                        (1) Turkey
-                        (2) Ham
-                        (3) Chicken
-                        (4) Roast Beef
-                        (5) Pastrami
-                        (6) Bacon
-                        (0) None
-                    """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+            boolean isRunning = true;
             while (isRunning) {
+                // Print options
+                PrintColumns.threeColumns("""
+                        What meat would you like to add to your sandwich?
+                            (1) Turkey
+                            (2) Ham
+                            (3) Chicken
+                            (4) Roast Beef
+                            (5) Pastrami
+                            (6) Bacon
+                            (0) None
+                        """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+                // Get first character of user input
                 char chooseMeatMenuOption = getValidInput(String.class).charAt(0);
+                // Assign correct MeatType
                 switch (chooseMeatMenuOption) {
                     case '1' -> {
                         meatType = MeatType.TURKEY;
@@ -364,12 +401,15 @@ public class UserInterface {
             boolean isExtra = false;
             isRunning = true;
             while (isRunning) {
+                // Print options
                 PrintColumns.threeColumns("""
                         Would you like extra of that?
                         (Y) Yes
                         (N) No
                         """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+                // Get first character of user input
                 char chooseMeatExtraOption = getValidInput(String.class).charAt(0);
+                // Assign correct isExtra boolean
                 switch (chooseMeatExtraOption) {
                     case 'y' -> {
                         isExtra = true;
@@ -379,6 +419,7 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
+            // Add meat to SandwichOrder
             currentSandwich.addMeat(new PremiumToppingMeat(meatType, isExtra));
             PrintColumns.threeColumns("""
                     Would you like to add another meat?
@@ -402,19 +443,21 @@ public class UserInterface {
     private static void addSandwichCheese(SandwichOrder currentSandwich) {
 
         while (true) {
-            boolean isRunning = true;
             CheeseType cheeseType = null;
-            PrintColumns.threeColumns("""
-                    What cheese would you like to add to your sandwich?
-                        (1) American
-                        (2) Swiss
-                        (3) Cheddar
-                        (4) Provolone
-                        (0) None
-                    """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
-            // Select cheese
+            boolean isRunning = true;
             while (isRunning) {
+                // Print options
+                PrintColumns.threeColumns("""
+                        What cheese would you like to add to your sandwich?
+                            (1) American
+                            (2) Swiss
+                            (3) Cheddar
+                            (4) Provolone
+                            (0) None
+                        """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+                // Get first character of user input
                 char chooseCheeseMenuOption = getValidInput(String.class).charAt(0);
+                // Assign correct CheeseType
                 switch (chooseCheeseMenuOption) {
                     case '1' -> {
                         cheeseType = CheeseType.AMERICAN;
@@ -448,6 +491,7 @@ public class UserInterface {
                             (N) No
                         """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
                 char chooseCheeseExtraOption = getValidInput(String.class).charAt(0);
+                // Assign correct isExtra boolean value
                 switch (chooseCheeseExtraOption) {
                     case 'y' -> {
                         isExtra = true;
@@ -482,25 +526,26 @@ public class UserInterface {
     private static void addSandwichToppings(SandwichOrder currentSandwich) {
 
         while (true) {
-            boolean isRunning = true;
             RegularToppingType toppingType = null;
-
-            PrintColumns.threeColumns("""
-                    What topping would you like to add to your sandwich?
-                        (1) Lettuce
-                        (2) Tomato
-                        (3) Onion
-                        (4) Peppers
-                        (5) Jalapeños
-                        (6) Pickles
-                        (7) Olives
-                        (8) Spinach
-                        (9) Mushrooms
-                        (0) None
-                    """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
-            // Select topping
+            boolean isRunning = true;
             while (isRunning) {
+                // Print options
+                PrintColumns.threeColumns("""
+                        What topping would you like to add to your sandwich?
+                            (1) Lettuce
+                            (2) Tomato
+                            (3) Onion
+                            (4) Peppers
+                            (5) Jalapeños
+                            (6) Pickles
+                            (7) Olives
+                            (8) Spinach
+                            (9) Mushrooms
+                            (0) None
+                        """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+                // Get first character of user input
                 char chooseToppingMenuOption = getValidInput(String.class).charAt(0);
+                // Assign RegularToppingType
                 switch (chooseToppingMenuOption) {
                     case '1' -> {
                         toppingType = RegularToppingType.LETTUCE;
@@ -575,9 +620,9 @@ public class UserInterface {
             while (isRunning) {
                 char chooseAnotherToppingOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherToppingOption) {
-                    case 'y' -> isRunning = false; // loop continues
+                    case 'y' -> isRunning = false; // Loop continues
                     case 'n' -> {
-                        return; // done adding toppings
+                        return; // Done adding toppings
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
@@ -588,21 +633,23 @@ public class UserInterface {
     private static void addSandwichSauces(SandwichOrder currentSandwich) {
 
         while (true) {
-            boolean isRunning = true;
             SauceType sauceType = null;
-            PrintColumns.threeColumns("""
-                    What sauce would you like to add to your sandwich?
-                        (1) Mayo
-                        (2) Mustard
-                        (3) Guacamole
-                        (4) Pesto
-                        (5) Ranch
-                        (6) Caesar
-                        (0) None
-                    """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
-            // Select sauce
+            boolean isRunning = true;
             while (isRunning) {
+                // Print options
+                PrintColumns.threeColumns("""
+                        What sauce would you like to add to your sandwich?
+                            (1) Mayo
+                            (2) Mustard
+                            (3) Guacamole
+                            (4) Pesto
+                            (5) Ranch
+                            (6) Caesar
+                            (0) None
+                        """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+                // Get first character of user input
                 char chooseSauceOption = getValidInput(String.class).charAt(0);
+                // Assign correct SauceType
                 switch (chooseSauceOption) {
                     case '1' -> {
                         sauceType = SauceType.MAYO;
@@ -635,6 +682,7 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
+            // Add Sauce to SandwichOrder
             currentSandwich.addSauce(new Sauce(sauceType));
             // Ask if they want another
             PrintColumns.threeColumns("""
@@ -644,6 +692,7 @@ public class UserInterface {
                     """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
             isRunning = true;
             while (isRunning) {
+                // Get first character of user input
                 char chooseAnotherSauceOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherSauceOption) {
                     case 'y' -> isRunning = false; // continue loop
