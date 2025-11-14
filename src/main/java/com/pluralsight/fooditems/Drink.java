@@ -61,7 +61,7 @@ public class Drink extends MenuItem {
         return title + "\n" +
                 "=====================================\n" +
                 // Add Order Information
-                String.format("Size: %s\n", getSize()) +
+                String.format("Size: %s\n", getSize().name()) +
                 String.format("Brand: %s\n", getDrinkType().name().replace("_", "-")) +
                 // Add Price and Calories
                 "=====================================\n" +
