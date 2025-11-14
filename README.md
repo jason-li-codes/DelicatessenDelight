@@ -6,14 +6,14 @@ The **Delicatessen Delights** project is a Command Line Interface (CLI) applicat
 
 ### Table of Contents
 
-1.  [Key Features](https://www.google.com/search?q=%231-key-features-)
-2.  [Project Structure](https://www.google.com/search?q=%233-project-structure-)
-3.  [UML Diagram](https://www.google.com/search?q=%234-uml-diagram-)
-4.  [Setup and Installation](https://www.google.com/search?q=%235-setup-and-installation-)
-5.  [User Interface / Menu Examples](https://www.google.com/search?q=%236-user-interface--menu-examples-)
-6.  [Example Receipt Output](https://www.google.com/search?q=%237-example-receipt-output-)
-7.  [Interesting Code Snippet](https://www.google.com/search?q=%238-interesting-code-snippet-)
-8.  [Future Improvements](https://www.google.com/search?q=%239-future-improvements-)
+1.  [Key Features](#1-key-features-)
+2.  [Project Structure](#2-project-structure-)
+3.  [UML Diagram](#3-uml-diagram-)
+4.  [Setup and Installation](#4-setup-and-installation-)
+5.  [User Interface / Menu Examples](#5-user-interface--menu-examples-%EF%B8%8F)
+6.  [Example Receipt Output](#6-example-receipt-output-)
+7.  [Interesting Code Snippet](#7-interesting-code-snippet-)
+8.  [Future Improvements](#8-future-improvements-)
 
 -----
 
@@ -50,8 +50,9 @@ The project uses a standard Maven structure with packages separating core logic,
                     │   └── sandwich/
                     │       ├── Bread.java
                     │       ├── SandwichFilling.java (Abstract base for toppings)
+                    │       ├── ... (Child classes for PremiumTopping, RegularTopping, etc.)
                     │       ├── SandwichOrder.java (Custom sandwich logic)
-                    │       └── SpecialSandwichOrder.java
+                    │       └── SpecialSandwichOrder.java (Special preset SandwichOrders)
                     └── utilizedclasses/
                         ├── CustomerOrder.java (Manages the overall order list)
                         ├── FixedArrayList.java (List with an enforced size limit)
@@ -345,42 +346,38 @@ Thank you for coming to Delicatessen Delights, please come again!
 
 ### 7\. Interesting Code Snippet 💡
 
-The pricing logic for the custom sandwich is the most complex, dynamically calculating the price of meats and cheeses based on the overall sandwich size and whether the user chose "extra" portions. It utilizes Java streams for a clean, functional approach to summation and `switch` expressions for concise price lookups.
+This method showcases the **dynamic calorie calculation**, which ensures the total calorie count is always accurate regardless of the sandwich's components or size. It uses Java Streams to efficiently aggregate the calories of every component and applies a final multiplier based on the sandwich size (`SMALL`=x1, `MEDIUM`=x2, `LARGE`=x3).
 
 ```java
 // Snippet from SandwichOrder.java
-public void updatePrice() {
+// Update calories of SandwichOrder by going through all attributes individually
+public void updateCalories() {
 
-    // Base price depends on size
-    double totalPrice = switch (size) {
-        case SMALL -> 5.50;
-        case MEDIUM -> 7;
-        case LARGE -> 8.50;
+    // Begin with integer of value 0
+    int totalCal = 0;
+    totalCal += bread.getCalories(); // Extract calories from bread
+    totalCal += premiumToppingMeats.getItems().stream()
+            .mapToInt(PremiumToppingMeat::getCalories) // Extract calories from each meat topping
+            .sum();
+    totalCal += premiumToppingCheeses.getItems().stream()
+            .mapToInt(PremiumToppingCheese::getCalories) // Extract calories from each cheese topping
+            .sum();
+    totalCal += regularToppings.getItems().stream()
+            .mapToInt(RegularTopping::getCalories) // Extract calories from each regular topping
+            .sum();
+    totalCal += sauces.getItems().stream()
+            .mapToInt(Sauce::getCalories) // Extract calories from each sauce
+            .sum();
+    totalCal += sides.getItems().stream()
+            .mapToInt(Side::getCalories) // Extract calories from each side
+            .sum();
+
+    // Use multiplier depending on SandwichOrder size
+    this.calories = totalCal * switch (size) {
+        case SMALL -> 1;
+        case MEDIUM -> 2;
+        case LARGE -> 3;
     };
-
-    // Calculate the total price for regular meats + extra meats
-    totalPrice += premiumToppingMeats.getItems().stream()
-            // Map each item to its price based on the size (regular meat price)
-            .mapToDouble(item -> switch (size) {
-                case SMALL -> 1;
-                case MEDIUM -> 2;
-                case LARGE -> 3;
-            })
-            .sum() +  // Sum the regular meat prices
-
-            // Calculate the total price for extra meats
-            premiumToppingMeats.getItems().stream()
-                    .filter(PremiumToppingMeat::isExtra)  // Filter the items where isExtra is true
-                    .mapToDouble(item -> switch (size) {
-                        case SMALL -> 0.50;
-                        case MEDIUM -> 1;
-                        case LARGE -> 1.50;
-                    })
-                    .sum();  // Sum all the extra meat prices
-
-    // ... similar logic for cheese pricing ...
-
-    price = totalPrice;
 }
 ```
 
