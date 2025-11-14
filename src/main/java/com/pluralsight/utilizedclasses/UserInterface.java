@@ -61,7 +61,7 @@ public class UserInterface {
                     """);
             char orderMenuOption = getValidInput(String.class, false).charAt(0);
             switch (orderMenuOption) {
-                case '1' -> addSandwich();
+                case '1' -> beginSandwich();
                 case '2' -> addDrink();
                 case '3' -> addChips();
                 case '4' -> checkout();
@@ -76,7 +76,7 @@ public class UserInterface {
 
     }
 
-    public static void addSandwich() {
+    public static void beginSandwich() {
 
         System.out.println("""
                 What size of sandwich would you like?
@@ -145,17 +145,422 @@ public class UserInterface {
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
-
         SandwichOrder currentSandwich = new SandwichOrder(new Bread(breadType), sandwichSize);
 
-        currentSandwich.toString("Current order");
+        addSandwichMeat(currentSandwich);
+        addSandwichCheese(currentSandwich);
+        addSandwichToppings(currentSandwich);
+        addSandwichSauces(currentSandwich);
+        addSandwichSides(currentSandwich);
+    }
 
+    private static void addSandwichMeat(SandwichOrder currentSandwich) {
 
+        System.out.println(currentSandwich.toString("Current order:"));
 
-        isRunning = true;
+        boolean isRunning = true;
+        while (isRunning) {
+            MeatType meatType = null;
+            System.out.println("""
+                    What meat would you like to add to your sandwich?
+                        (1) Turkey
+                        (2) Ham
+                        (3) Chicken
+                        (4) Roast Beef
+                        (5) Pastrami
+                        (6) Bacon
+                        (0) None
+                    """);
+            while (isRunning) {
+                char chooseMeatMenuOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseMeatMenuOption) {
+                    case '1' -> {
+                        meatType = MeatType.TURKEY;
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        meatType = MeatType.HAM;
+                        isRunning = false;
+                    }
+                    case '3' -> {
+                        meatType = MeatType.CHICKEN;
+                        isRunning = false;
+                    }
+                    case '4' -> {
+                        meatType = MeatType.ROAST_BEEF;
+                        isRunning = false;
+                    }
+                    case '5' -> {
+                        meatType = MeatType.PASTRAMI;
+                        isRunning = false;
+                    }
+                    case '6' -> {
+                        meatType = MeatType.BACON;
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            boolean isExtra = false;
+            isRunning = true;
+            while (isRunning) {
+                System.out.println("""
+                        Would you like extra of that?
+                        (Y) Yes
+                        (N) No
+                        """);
+                char chooseMeatExtraOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseMeatExtraOption) {
+                    case 'Y' -> {
+                        isExtra = true;
+                        isRunning = false;
+                    }
+                    case 'N' -> isRunning = false;
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            currentSandwich.addMeat(new PremiumToppingMeat(meatType, isExtra));
+            System.out.println("""
+                    Would you like to add another meat?
+                    (Y) Yes
+                    (N) No
+                    """);
+            isRunning = true;
+            while (isRunning) {
+                char chooseAnotherMeatOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseAnotherMeatOption) {
+                    case 'Y' -> isRunning = false;
+                    case 'N' -> {
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+        }
+    }
 
+    private static void addSandwichCheese(SandwichOrder currentSandwich) {
 
+        System.out.println(currentSandwich.toString("Current order:"));
 
+        boolean isRunning = true;
+        while (isRunning) {
+            CheeseType cheeseType = null;
+            System.out.println("""
+                    What cheese would you like to add to your sandwich?
+                        (1) American
+                        (2) Swiss
+                        (3) Cheddar
+                        (4) Provolone
+                        (0) None
+                    """);
+            // Select cheese
+            while (isRunning) {
+                char chooseCheeseMenuOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseCheeseMenuOption) {
+                    case '1' -> {
+                        cheeseType = CheeseType.AMERICAN;
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        cheeseType = CheeseType.SWISS;
+                        isRunning = false;
+                    }
+                    case '3' -> {
+                        cheeseType = CheeseType.CHEDDAR;
+                        isRunning = false;
+                    }
+                    case '4' -> {
+                        cheeseType = CheeseType.PROVOLONE;
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            // Ask for extra cheese
+            boolean isExtra = false;
+            isRunning = true;
+            while (isRunning) {
+                System.out.println("""
+                        Would you like extra of that cheese?
+                        (Y) Yes
+                        (N) No
+                        """);
+                char chooseCheeseExtraOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseCheeseExtraOption) {
+                    case 'Y' -> {
+                        isExtra = true;
+                        isRunning = false;
+                    }
+                    case 'N' -> isRunning = false;
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            // Add cheese to sandwich
+            currentSandwich.addCheese(new PremiumToppingCheese(cheeseType, isExtra));
+            // Ask if they want another
+            System.out.println("""
+                    Would you like to add another cheese?
+                    (Y) Yes
+                    (N) No
+                    """);
+            isRunning = true;
+            while (isRunning) {
+                char chooseAnotherCheeseOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseAnotherCheeseOption) {
+                    case 'Y' -> isRunning = false; // loop adds another
+                    case 'N' -> {
+                        return; // done with cheese selection
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+        }
+    }
+
+    private static void addSandwichToppings(SandwichOrder currentSandwich) {
+
+        System.out.println(currentSandwich.toString("Current order:"));
+
+        boolean isRunning = true;
+        while (isRunning) {
+            RegularToppingType toppingType = null;
+
+            System.out.println("""
+                    What topping would you like to add to your sandwich?
+                        (1) Lettuce
+                        (2) Tomato
+                        (3) Onion
+                        (4) Peppers
+                        (5) Jalapeños
+                        (6) Pickles
+                        (7) Olives
+                        (8) Spinach
+                        (9) Mushrooms
+                        (0) None
+                    """);
+            // Select topping
+            while (isRunning) {
+                char chooseToppingMenuOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseToppingMenuOption) {
+                    case '1' -> {
+                        toppingType = RegularToppingType.LETTUCE;
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        toppingType = RegularToppingType.TOMATO;
+                        isRunning = false;
+                    }
+                    case '3' -> {
+                        toppingType = RegularToppingType.ONION;
+                        isRunning = false;
+                    }
+                    case '4' -> {
+                        toppingType = RegularToppingType.PEPPERS;
+                        isRunning = false;
+                    }
+                    case '5' -> {
+                        toppingType = RegularToppingType.JALAPENOS;
+                        isRunning = false;
+                    }
+                    case '6' -> {
+                        toppingType = RegularToppingType.PICKLES;
+                        isRunning = false;
+                    }
+                    case '7' -> {
+                        toppingType = RegularToppingType.OLIVES;
+                        isRunning = false;
+                    }
+                    case '8' -> {
+                        toppingType = RegularToppingType.SPINACH;
+                        isRunning = false;
+                    }
+                    case '9' -> {
+                        toppingType = RegularToppingType.MUSHROOMS;
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            // Ask for extra topping
+            boolean isExtra = false;
+            isRunning = true;
+            while (isRunning) {
+                System.out.println("""
+                        Would you like extra of that topping?
+                        (Y) Yes
+                        (N) No
+                        """);
+                char chooseToppingExtraOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseToppingExtraOption) {
+                    case 'Y' -> {
+                        isExtra = true;
+                        isRunning = false;
+                    }
+                    case 'N' -> isRunning = false;
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            // Add topping to sandwich
+            currentSandwich.addRegularTopping(new RegularTopping(toppingType, isExtra));
+            // Ask if they want another topping
+            System.out.println("""
+                    Would you like to add another topping?
+                    (Y) Yes
+                    (N) No
+                    """);
+            isRunning = true;
+            while (isRunning) {
+                char chooseAnotherToppingOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseAnotherToppingOption) {
+                    case 'Y' -> isRunning = false; // loop continues
+                    case 'N' -> {
+                        return; // done adding toppings
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+        }
+    }
+
+    private static void addSandwichSauces(SandwichOrder currentSandwich) {
+
+        System.out.println(currentSandwich.toString("Current order:"));
+        boolean isRunning = true;
+        while (isRunning) {
+            SauceType sauceType = null;
+            System.out.println("""
+                    What sauce would you like to add to your sandwich?
+                        (1) Mayo
+                        (2) Mustard
+                        (3) Guacamole
+                        (4) Pesto
+                        (5) Ranch
+                        (6) Caesar
+                        (0) None
+                    """);
+            // Select sauce
+            while (isRunning) {
+                char chooseSauceOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseSauceOption) {
+                    case '1' -> {
+                        sauceType = SauceType.MAYO;
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        sauceType = SauceType.MUSTARD;
+                        isRunning = false;
+                    }
+                    case '3' -> {
+                        sauceType = SauceType.GUACAMOLE;
+                        isRunning = false;
+                    }
+                    case '4' -> {
+                        sauceType = SauceType.PESTO;
+                        isRunning = false;
+                    }
+                    case '5' -> {
+                        sauceType = SauceType.RANCH;
+                        isRunning = false;
+                    }
+                    case '6' -> {
+                        sauceType = SauceType.CAESAR;
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        System.out.println("Returning to previous menu...");
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            currentSandwich.addSauce(new Sauce(sauceType));
+            // Ask if they want another
+            System.out.println("""
+                    Would you like to add another sauce?
+                    (Y) Yes
+                    (N) No
+                    """);
+            isRunning = true;
+            while (isRunning) {
+                char chooseAnotherSauceOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseAnotherSauceOption) {
+                    case 'Y' -> isRunning = false; // continue loop
+                    case 'N' -> {
+                        return; // done adding sauces
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+        }
+    }
+
+    private static void addSandwichSides(SandwichOrder currentSandwich) {
+
+        System.out.println(currentSandwich.toString("Current order:"));
+
+        boolean isRunning = true;
+        while (isRunning) {
+            SideType sideType = null;
+            System.out.println("""
+                What side would you like to add?
+                    (1) Pickles
+                    (2) Fries
+                    (0) None
+                """);
+            // Select side
+            while (isRunning) {
+                char chooseSideOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseSideOption) {
+                    case '1' -> {
+                        sideType = SideType.PICKLES;
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        sideType = SideType.FRIES;
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        System.out.println("Returning to previous menu...");
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            // Add selected side
+            currentSandwich.addSide(new Side(sideType));
+            // Ask if they want another
+            System.out.println("""
+                Would you like to add another side?
+                (Y) Yes
+                (N) No
+                """);
+            isRunning = true;
+            while (isRunning) {
+                char chooseAnotherSideOption = getValidInput(String.class, false).charAt(0);
+                switch (chooseAnotherSideOption) {
+                    case 'Y' -> isRunning = false; // loop again
+                    case 'N' -> {
+                        return; // finish
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+        }
     }
 
     private static void addDrink() {
