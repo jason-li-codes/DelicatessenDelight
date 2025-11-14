@@ -23,8 +23,7 @@ public class Chips extends MenuItem {
 
     @Override
     public String toString(String title) {
-        return "=====================================\n" +
-                title + "\n" +
+        return title + "\n" +
                 "=====================================\n" +
                 // Add Order Information
                 String.format("Brand: %s\n", getChipsType()) +

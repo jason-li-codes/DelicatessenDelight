@@ -296,8 +296,7 @@ public class SandwichOrder extends MenuItem {
 
         StringBuilder receiptLine = new StringBuilder();
         // Add Header
-        receiptLine.append("=====================================\n")
-                .append(title).append("\n")
+        receiptLine.append(title).append("\n")
                 .append("=====================================\n");
         // Add basic order information
         receiptLine.append(String.format("Size: %s\n", getSize()));

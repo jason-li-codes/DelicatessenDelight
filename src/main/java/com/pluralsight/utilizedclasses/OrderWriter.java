@@ -20,7 +20,9 @@ public class OrderWriter {
         try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter(newFileName))) {
             bufWriter.write(newFileName.substring(0, newFileName.length() - 4) + "\n\n");
             bufWriter.write("--------------------------------------------------------\n");
-            for (MenuItem menuItem : customerOrder.getMenuItems()) { // Writes each transaction to file
+            int itemNumber = 1;
+            for (MenuItem menuItem : customerOrder.getMenuItems()) {
+                bufWriter.write(itemNumber++ + ". ");
                 bufWriter.write(formatOrder(menuItem));
             }
             bufWriter.write("--------------------------------------------------------\n");

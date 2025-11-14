@@ -58,8 +58,7 @@ public class Drink extends MenuItem {
 
     @Override
     public String toString(String title) {
-        return "=====================================\n" +
-                "                DRINK                \n" +
+        return "                DRINK                \n" +
                 "=====================================\n" +
                 // Add Order Information
                 String.format("Size: %s\n", getSize()) +
