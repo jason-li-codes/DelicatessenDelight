@@ -5,8 +5,11 @@ import com.pluralsight.fooditems.enums.*;
 
 public class SpecialSandwichOrder extends SandwichOrder {
 
+    private String sandwichName;
+
     public SpecialSandwichOrder(String specialSandwich) {
         super(selectBread(specialSandwich), Size.MEDIUM); // call to parent constructor
+        this.sandwichName = specialSandwich;
         configureSandwich(specialSandwich);
     }
 
@@ -99,6 +102,11 @@ public class SpecialSandwichOrder extends SandwichOrder {
             case "southwest sunrise" -> new Bread(BreadType.WHITE);
             default -> new Bread(BreadType.WHEAT);
         };
+    }
+
+    @Override
+    public String toString() {
+        super.toString(sandwichName);
     }
 
 }
