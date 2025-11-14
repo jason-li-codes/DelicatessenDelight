@@ -1,7 +1,6 @@
 package com.pluralsight.utilizedclasses;
 
 import com.pluralsight.fooditems.*;
-import com.pluralsight.fooditems.addons.*;
 import com.pluralsight.fooditems.sandwich.*;
 
 import java.io.FileWriter;
