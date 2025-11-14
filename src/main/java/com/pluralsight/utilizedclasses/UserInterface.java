@@ -695,9 +695,9 @@ public class UserInterface {
                 // Get first character of user input
                 char chooseAnotherSauceOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherSauceOption) {
-                    case 'y' -> isRunning = false; // continue loop
+                    case 'y' -> isRunning = false; // Continue loop
                     case 'n' -> {
-                        return; // done adding sauces
+                        return; // Done adding sauces
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
@@ -708,17 +708,19 @@ public class UserInterface {
     private static void addSandwichSides(SandwichOrder currentSandwich) {
 
         while (true) {
-            boolean isRunning = true;
             SideType sideType = null;
-            PrintColumns.threeColumns("""
-                    What side would you like to add?
-                        (1) Pickles
-                        (2) Fries
-                        (0) None
-                    """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
-            // Select side
+            boolean isRunning = true;
             while (isRunning) {
+                // Print options
+                PrintColumns.threeColumns("""
+                        What side would you like to add?
+                            (1) Pickles
+                            (2) Fries
+                            (0) None
+                        """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
+                // Get first character of user input
                 char chooseSideOption = getValidInput(String.class).charAt(0);
+                // Assign correct SideType
                 switch (chooseSideOption) {
                     case '1' -> {
                         sideType = SideType.PICKLES;
@@ -747,9 +749,9 @@ public class UserInterface {
             while (isRunning) {
                 char chooseAnotherSideOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherSideOption) {
-                    case 'y' -> isRunning = false; // loop again
+                    case 'y' -> isRunning = false; // Loop again
                     case 'n' -> {
-                        return; // finish
+                        return;
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
@@ -759,18 +761,21 @@ public class UserInterface {
 
     private static void addDrink() {
 
-        PrintColumns.twoColumns("""
-                What size of drink would you like?
-                (S) Small
-                (M) Medium
-                (L) Large
-                (0) Cancel drink order
-                """, PrintMenu.drinksMenu());
         Size drinkSize = null;
         boolean isRunning = true;
         while (isRunning) {
-            char addSandwichMenuOption = getValidInput(String.class).charAt(0);
-            switch (addSandwichMenuOption) {
+            // Print options
+            PrintColumns.twoColumns("""
+                    What size of drink would you like?
+                    (S) Small
+                    (M) Medium
+                    (L) Large
+                    (0) Cancel drink order
+                    """, PrintMenu.drinksMenu());
+            // Get first character of user input
+            char addDrinkMenuOption = getValidInput(String.class).charAt(0);
+            // Assign correct size
+            switch (addDrinkMenuOption) {
                 case 's' -> {
                     drinkSize = Size.SMALL;
                     isRunning = false;
@@ -790,19 +795,23 @@ public class UserInterface {
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
-        PrintColumns.twoColumns("""
-                What type of drink would you like?
-                (1) KO-KUH
-                (2) SPRY-TUH
-                (3) PEP-UH-SEE
-                (4) DOK-TUH PEP-UH
-                (5) MONS-TUH
-                (0) Cancel drink order
-                """, PrintMenu.drinksMenu());
+
         DrinkType drinkType = null;
         isRunning = true;
         while (isRunning) {
+            // Print options
+            PrintColumns.twoColumns("""
+                    What type of drink would you like?
+                    (1) KO-KUH
+                    (2) SPRY-TUH
+                    (3) PEP-UH-SEE
+                    (4) DOK-TUH PEP-UH
+                    (5) MONS-TUH
+                    (0) Cancel drink order
+                    """, PrintMenu.drinksMenu());
+            // Get first character of user input
             char chooseBreadMenuOption = getValidInput(String.class).charAt(0);
+            // Assign correct DrinkType
             switch (chooseBreadMenuOption) {
                 case '1' -> {
                     drinkType = DrinkType.KO_KUH;
@@ -831,27 +840,28 @@ public class UserInterface {
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
+        // Add Drink to customerOrder
         customerOrder.getMenuItems().add(new Drink(drinkType, drinkSize));
-
     }
 
     private static void addChips() {
 
-        PrintColumns.twoColumns("""
-                What type of chips would you like?
-                (1) Po-Tay-Tohz
-                (2) Free-Tohz
-                (3) Toasty-Tohz
-                (4) Taki-Tohz
-                (5) Dory-Tohz
-                (0) Cancel chips order
-                """, PrintMenu.chipsMenu());
-        // Loop to get valid input
         ChipsType chipsType = null;
         boolean isRunning = true;
         while (isRunning) {
-            // Get valid user input (assuming `getValidInput` method or equivalent is present)
+            // Print options
+            PrintColumns.twoColumns("""
+                    What type of chips would you like?
+                    (1) Po-Tay-Tohz
+                    (2) Free-Tohz
+                    (3) Toasty-Tohz
+                    (4) Taki-Tohz
+                    (5) Dory-Tohz
+                    (0) Cancel chips order
+                    """, PrintMenu.chipsMenu());
+            // Get first character of user input
             char chooseChipsMenuOption = getValidInput(String.class).charAt(0);
+            // Assign correct ChipsType
             switch (chooseChipsMenuOption) {
                 case '1' -> {
                     chipsType = ChipsType.PO_TAY_TOHZ;
@@ -875,16 +885,18 @@ public class UserInterface {
                 }
                 case '0' -> {
                     System.out.println("Returning to previous menu....");
-                    return;  // Exit the method, effectively going back
+                    return;  // Exit the method
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
+        // Add Chips to customerOrder
         customerOrder.getMenuItems().add(new Chips(chipsType));
     }
 
     private static <T> T getValidInput(Class<T> type) {
 
+        // Initialize String and parsedValue
         String userInput;
         T parsedValue = null;
 
@@ -907,7 +919,7 @@ public class UserInterface {
                     parsedValue = type.cast(userInput);
                 }
             }
-            // If value is valid or null is allowed
+            // Check if parsedValue is null before looping
             if (parsedValue != null) {
                 return parsedValue;
             } else {
