@@ -1,0 +1,69 @@
+2025-11-14T21:53:33.297908700
+-------------------------------------
+1. Green Mountain Melt
+=====================================
+Size: MEDIUM
+Bread: MULTIGRAIN
+Toasted: Yes
+Meats:
+ - TURKEY (Extra)
+Cheeses:
+ - AMERICAN (Extra)
+Toppings:
+ - LETTUCE (Regular)
+ - TOMATO (Regular)
+ - SPINACH (Regular)
+Sauces:
+ - PESTO
+Sides:
+  - PICKLES
+=====================================
+Price: $10.00
+Calories: 1452
+=====================================
+2. SANDWICH
+=====================================
+Size: MEDIUM
+Bread: MULTIGRAIN
+Toasted: Yes
+Meats:
+ - CHICKEN (Regular)
+Cheeses:
+ - SWISS (Regular)
+Toppings:
+ - SPINACH (Regular)
+ - TOMATO (Regular)
+ - ONION (Regular)
+ - JALAPENOS (Extra)
+Sauces:
+ - GUACAMOLE
+ - PESTO
+Sides:
+  - PICKLES
+  - FRIES
+=====================================
+Price: $10.50
+Calories: 2252
+=====================================
+3. DRINK
+=====================================
+Size: SMALL
+Brand: SPRY-TUH
+=====================================
+Price: $2.00
+Calories: 90
+=====================================
+4. CHIPS
+=====================================
+Brand: TAKI-TOHZ
+=====================================
+Price: $1.50
+Calories: 155
+=====================================
+-------------------------------------
+Total Price: $24.00
+Total Calories: 3949
+-------------------------------------
+Thank you for coming to
+Delicatessen Delights,
+please come again!
