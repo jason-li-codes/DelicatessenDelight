@@ -100,7 +100,7 @@ public class PrintMenu {
                 ║               DELICATESSEN DELIGHTS:                 ║             SPECIALTY SANDWICH DETAILS               ║
                 ║            PREMIUM SIGNATURE SANDWICHES              ║          (All sandwiches are MEDIUM sized)           ║
                 ╠══════════════════════════════════════════════════════╬══════════════════════════════════════════════════════╣
-                ║ GREEN MOUNTAIN MELT ...................... (1030 cal)║ SMOKEHOUSE STACK ........................ (2200 cal) ║
+                ║ GREEN MOUNTAIN MELT ...................... (1452 cal)║ SMOKEHOUSE STACK ........................ (3428 cal) ║
                 ║ • Bread: Multigrain                                  ║ • Bread: Rye                                         ║
                 ║ • Meat: Turkey (Extra)                               ║ • Meats: Roast Beef (Extra), Bacon (Extra)           ║
                 ║ • Cheese: American (Extra)                           ║ • Cheese: Cheddar (Extra)                            ║
@@ -109,7 +109,7 @@ public class PrintMenu {
                 ║ • Side: Pickles                                      ║ • Side: Fries                                        ║
                 ║ • Toasted: Yes                                       ║ • Toasted: Yes                                       ║
                 ╠══════════════════════════════════════════════════════╬══════════════════════════════════════════════════════╣
-                ║ SOUTHWEST SUNRISE ........................ (970 cal) ║ PASTRAMI KING .......................... (1886 cal)  ║
+                ║ SOUTHWEST SUNRISE ........................ (1542 cal)║ PASTRAMI KING .......................... (2594 cal)  ║
                 ║ • Bread: White                                       ║ • Bread: Rye                                         ║
                 ║ • Meat: Chicken (Extra)                              ║ • Meat: Pastrami (Extra)                             ║
                 ║ • Cheese: Provolone (Extra)                          ║ • Cheese: Swiss (Extra)                              ║
@@ -118,7 +118,7 @@ public class PrintMenu {
                 ║ • Side: Pickles                                      ║ • Side: Fries                                        ║
                 ║ • Toasted: Yes                                       ║ • Toasted: Yes                                       ║
                 ╠══════════════════════════════════════════════════════╬══════════════════════════════════════════════════════╣
-                ║ GARDEN DELIGHT ............................ (874 cal)║ MEDITERRANEAN DELIGHT ................. (714 cal)    ║
+                ║ GARDEN DELIGHT ........................... (1086 cal)║ MEDITERRANEAN DELIGHT ................. (906 cal)    ║
                 ║ • Bread: Multigrain                                  ║ • Bread: Multigrain                                  ║
                 ║ • Cheese: Provolone (Extra)                          ║ • Cheese: Provolone (Extra)                          ║
                 ║ • Toppings: Lettuce, Tomato, Spinach, Mushrooms      ║ • Toppings: Spinach, Olives, Tomato, Peppers         ║
@@ -140,7 +140,7 @@ public class PrintMenu {
                 ║   Medium ............... $2.50                           ║
                 ║   Large  ............... $3.00                           ║
                 ║     - KO-KUH (100 cal)          - PEP-UH-SEE (98 cal)    ║
-                ║     - SPRY-TUH (90 cal)         - DOK-TUH-PEP-UH (96)    ║
+                ║     - SPRY-TUH (90 cal)         - DOK-TUH-PEP-UH (96 cal)║
                 ║     - MONS-TUH (95 cal)                                  ║
                 ╚══════════════════════════════════════════════════════════╝
                 """;

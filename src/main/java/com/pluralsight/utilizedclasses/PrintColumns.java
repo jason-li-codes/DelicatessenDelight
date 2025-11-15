@@ -44,6 +44,7 @@ public class PrintColumns {
         }
         if (numColumns == 3) {
             for (int i = 0; i < width + 2; i++) System.out.print(fill);
+            System.out.print(mid);
             for (int i = 0; i < width * 2 - 3; i++) System.out.print(fill);
             System.out.print(mid);
             for (int i = 0; i < width + 2; i++) System.out.print(fill);

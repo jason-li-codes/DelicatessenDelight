@@ -24,8 +24,8 @@ public class SpecialSandwichOrder extends SandwichOrder {
     // Configure sandwich toppings, meats, cheese, sauces
     private void configureSandwich(String specialSandwich) {
         // Use switch case to create appropriate SandwichOrder with the correct SandwichFilling
-        switch (specialSandwich.toLowerCase()) {
-            case "green mountain melt":
+        switch (specialSandwich) {
+            case "Green Mountain Melt":
                 this.addMeat(new PremiumToppingMeat(MeatType.TURKEY, true));
                 this.addCheese(new PremiumToppingCheese(CheeseType.AMERICAN, true));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.LETTUCE, false));
@@ -35,7 +35,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addSide(new Side(SideType.PICKLES));
                 break;
 
-            case "smokehouse stack":
+            case "Smokehouse Stack":
                 this.addMeat(new PremiumToppingMeat(MeatType.ROAST_BEEF, true));
                 this.addMeat(new PremiumToppingMeat(MeatType.BACON, true));
                 this.addCheese(new PremiumToppingCheese(CheeseType.CHEDDAR, true));
@@ -46,7 +46,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addSide(new Side(SideType.FRIES));
                 break;
 
-            case "southwest sunrise":
+            case "Southwest Sunrise":
                 this.addMeat(new PremiumToppingMeat(MeatType.CHICKEN, true));
                 this.addCheese(new PremiumToppingCheese(CheeseType.PROVOLONE, true));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.JALAPENOS, false));
@@ -56,7 +56,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addSide(new Side(SideType.PICKLES));
                 break;
 
-            case "pastrami king":
+            case "Pastrami King":
                 this.addMeat(new PremiumToppingMeat(MeatType.PASTRAMI, true));
                 this.addCheese(new PremiumToppingCheese(CheeseType.SWISS, true));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.ONION, false));
@@ -65,7 +65,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addSide(new Side(SideType.FRIES));
                 break;
 
-            case "garden delight":
+            case "Garden Delight":
                 this.addCheese(new PremiumToppingCheese(CheeseType.PROVOLONE, true));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.LETTUCE, false));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.TOMATO, false));
@@ -76,7 +76,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addSide(new Side(SideType.PICKLES));
                 break;
 
-            case "mediterranean delight":
+            case "Taste of the Mediterranean":
                 this.addCheese(new PremiumToppingCheese(CheeseType.PROVOLONE, true));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.SPINACH, false));
                 this.addRegularTopping(new RegularTopping(RegularToppingType.OLIVES, false));
@@ -96,10 +96,10 @@ public class SpecialSandwichOrder extends SandwichOrder {
 
     // Select bread for each special sandwich based on sandwichName
     private static Bread selectBread(String specialSandwich) {
-        return switch (specialSandwich.toLowerCase()) {
-            case "green mountain melt", "garden delight" -> new Bread(BreadType.MULTIGRAIN);
-            case "smokehouse stack", "pastrami king" -> new Bread(BreadType.RYE);
-            case "southwest sunrise" -> new Bread(BreadType.WHITE);
+        return switch (specialSandwich) {
+            case "Green Mountain Melt", "Garden Delight" -> new Bread(BreadType.MULTIGRAIN);
+            case "Smokehouse Stack", "Pastrami King" -> new Bread(BreadType.RYE);
+            case "Southwest Sunrise" -> new Bread(BreadType.WHITE);
             default -> new Bread(BreadType.WHEAT);
         };
     }

@@ -35,7 +35,7 @@ public class UserInterface {
             switch (mainMenuOption) {
                 case '1' -> orderMenu(); // Call orderMenu method
                 case '0' -> {
-                    System.out.println("EXITING....");
+                    System.out.println("We're sad to see you go!");
                     input.close(); // Close Scanner
                     return; // End program
                 }
@@ -207,6 +207,8 @@ public class UserInterface {
         addSandwichSauces(currentSandwich);
         addSandwichSides(currentSandwich);
 
+        // Add SandwichOrder to customerOrder
+        customerOrder.getMenuItems().add(currentSandwich);
         System.out.println("Sandwich successfully added to your order.");
     }
 
@@ -633,7 +635,7 @@ public class UserInterface {
                     (3) Southwest Sunrise
                     (4) Pastrami King
                     (5) Garden Delight
-                    (6) Mediterranean Delight
+                    (6) Taste of the Mediterranean
                     (0) Return to previous menu
                     """, PrintMenu.specialsMenu());
             // Get first character of user input
@@ -643,27 +645,27 @@ public class UserInterface {
                 // Create correct SpecialSandwichOrder based on user input
                 switch (specialsMenuOption) {
                     case '1' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("green mountain melt"));
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("Green Mountain Melt"));
                         isRunning = false;
                     }
                     case '2' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("smokehouse stack"));
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("Smokehouse Stack"));
                         isRunning = false;
                     }
                     case '3' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("southwest sunrise"));
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("Southwest Sunrise"));
                         isRunning = false;
                     }
                     case '4' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("pastrami king"));
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("Pastrami King"));
                         isRunning = false;
                     }
                     case '5' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("garden delight"));
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("Garden Delight"));
                         isRunning = false;
                     }
                     case '6' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("mediterranean delight"));
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("Taste of the Mediterranean"));
                         isRunning = false;
                     }
                     case '0' -> {
@@ -885,7 +887,9 @@ public class UserInterface {
         // Print receipt and thank you message
         PrintColumns.twoColumns("""
                 Your receipt has been printed.
-                Thank you for coming to Delicatessen Delights, please come again!
+                Thank you for coming to
+                Delicatessen Delights,
+                please come again!
                 """, OrderWriter.toString(customerOrder));
         // Clear customerOrder
         customerOrder.getMenuItems().clear();

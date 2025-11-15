@@ -195,13 +195,25 @@ public class SandwichOrder extends MenuItem {
         totalCal += bread.getCalories(); // Extract calories from bread
         totalCal += premiumToppingMeats.getItems().stream()
                 .mapToInt(PremiumToppingMeat::getCalories) // Extract calories from each meat topping
-                .sum();
+                .sum() +
+                premiumToppingMeats.getItems().stream()
+                        .filter(PremiumToppingMeat::isExtra)  // Filter the items where isExtra is true
+                        .mapToInt(PremiumToppingMeat::getCalories) // Get calories only for those extra
+                        .sum();
         totalCal += premiumToppingCheeses.getItems().stream()
                 .mapToInt(PremiumToppingCheese::getCalories) // Extract calories from each cheese topping
+                .sum() +
+                premiumToppingCheeses.getItems().stream()
+                .filter(PremiumToppingCheese::isExtra)  // Filter the items where isExtra is true
+                .mapToInt(PremiumToppingCheese::getCalories) // Get calories only for those extra
                 .sum();
         totalCal += regularToppings.getItems().stream()
                 .mapToInt(RegularTopping::getCalories) // Extract calories from each regular topping
-                .sum();
+                .sum() +
+                regularToppings.getItems().stream()
+                        .filter(RegularTopping::isExtra)  // Filter the items where isExtra is true
+                        .mapToInt(RegularTopping::getCalories) // Get calories only for those extra
+                        .sum();
         totalCal += sauces.getItems().stream()
                 .mapToInt(Sauce::getCalories) // Extract calories from each sauce
                 .sum();
@@ -237,7 +249,7 @@ public class SandwichOrder extends MenuItem {
         if (!getPremiumToppingMeats().getItems().isEmpty()) {
             receiptLine.append("Meats:\n");
             for (PremiumToppingMeat meat : getPremiumToppingMeats().getItems()) {
-                receiptLine.append(" - ").append(meat.getMeatType().name()).append(" (")
+                receiptLine.append(" - ").append(meat.getMeatType().name().replace("_", " ")).append(" (")
                         .append(meat.isExtra() ? "Extra" : "Regular").append(")\n");
             }
         } else { // If FixedArrayList is empty, output custom N/A String

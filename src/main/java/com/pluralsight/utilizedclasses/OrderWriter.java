@@ -23,7 +23,7 @@ public class OrderWriter {
         // Use try with resources to write receipt
         try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter(newFileName))) {
             // Write header
-            bufWriter.write(currentTime.toString());
+            bufWriter.write(currentTime.toString() + "\n");
             bufWriter.write("-------------------------------------\n");
             // Write each MenuItem with numbers
             int itemNumber = 1;
@@ -36,7 +36,7 @@ public class OrderWriter {
             bufWriter.write("Total Price: " + customerOrder.getTotalPrice() + "\n");
             bufWriter.write("Total Calories: " + customerOrder.getTotalCalories() + "\n");
             bufWriter.write("-------------------------------------\n");
-            bufWriter.write("Thank you for coming to Delicatessen Delights, please come again!");
+            bufWriter.write("Thank you for coming to\nDelicatessen Delights,\nplease come again!");
             System.out.println("File created successfully.");
         } catch (FileNotFoundException e) { // Handles FileNotFoundException
             System.out.println("Sorry, there's a problem creating the receipt, please try again later.");
@@ -58,7 +58,7 @@ public class OrderWriter {
         }
         // Add total price and calories at bottom of receipt
         orderString.append("-------------------------------------\n")
-                .append("Total Price: ").append(String.format("%.2f", customerOrder.getTotalPrice())).append("\n")
+                .append("Total Price: ").append(String.format("$%.2f", customerOrder.getTotalPrice())).append("\n")
                 .append("Total Calories: ").append(customerOrder.getTotalCalories()).append("\n");
         // Convert to String
         return orderString.toString();
