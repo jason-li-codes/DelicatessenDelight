@@ -339,7 +339,8 @@ Total Price: $14.50
 Total Calories: 2650
 -------------------------------------
 Thank you for coming to
-Delicatessen Delights, please come again!
+Delicatessen Delights,
+please come again!
 ```
 
 -----
