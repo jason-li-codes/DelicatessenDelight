@@ -57,7 +57,7 @@ public class PrintColumns {
         // Initialize console width
         int totalWidth = 180;
         // Calculate columnWidth
-        int columnWidth = (totalWidth - 5) / 3;
+        int columnWidth = (totalWidth - 4) / 3;
         // Clean and split into lines
         String[] leftLines = leftBlock.stripIndent().trim().split("\n");
         String[] midLines = midBlock.stripIndent().trim().split("\n");
@@ -77,7 +77,7 @@ public class PrintColumns {
             String mid = (i < midPad) ? "" : midLines[i - midPad];
             String right = (i < rightPad) ? "" : rightLines[i - rightPad];
             // Print line from left to right
-            System.out.printf("║ %-" + columnWidth + "s ║ %-" + columnWidth + "s ║ %-" + columnWidth + "s ║\n",
+            System.out.printf("║ %-" + columnWidth + "s ║ %-" + (columnWidth * 2 - 5) + "s ║ %-" + columnWidth + "s ║\n",
                     left, mid, right);
         }
         // Print bottom border
