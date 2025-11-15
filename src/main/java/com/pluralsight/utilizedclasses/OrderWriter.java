@@ -33,7 +33,7 @@ public class OrderWriter {
             }
             // Write total price and calories at bottom of receipt
             bufWriter.write("-------------------------------------\n");
-            bufWriter.write("Total Price: " + customerOrder.getTotalPrice() + "\n");
+            bufWriter.write("Total Price: " + String.format("$%.2f", customerOrder.getTotalPrice()) + "\n");
             bufWriter.write("Total Calories: " + customerOrder.getTotalCalories() + "\n");
             bufWriter.write("-------------------------------------\n");
             bufWriter.write("Thank you for coming to\nDelicatessen Delights,\nplease come again!");
